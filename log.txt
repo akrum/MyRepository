@@ -1,0 +1,18 @@
+MacBook-Pro-Andrew:MyRepository akrum$ git log
+commit 96f1f07a82030d5aa21830d94c0770b982627015
+Author: Andrew Rumiantsev <andy1116286@gmail.com>
+Date:   Tue Feb 7 12:06:55 2017 +0300
+
+    Added task1, status.txt
+
+commit 0611f9092094c03642c6516868854e7a568da409
+Author: Andrew Rumiantsev <andy1116286@gmail.com>
+Date:   Tue Feb 7 12:04:09 2017 +0300
+
+    Made DS_Store without slash
+
+commit 6b706e116903d28204623b727f7e5bfdf6fe3666
+Author: Andrew Rumiantsev <andy1116286@gmail.com>
+Date:   Tue Feb 7 12:00:55 2017 +0300
+
+    added .gitignore
