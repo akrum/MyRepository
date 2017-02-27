@@ -1,0 +1,182 @@
+    body {
+        background-color: rgb(44, 252, 254);
+        background-image: url("background.jpg");
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    h1 {
+        font-family: Lobster, Monospace, serif;
+        font-size: 650%;
+        color: white;
+        top: 500px;
+    }
+
+    .userPicture {
+        height: 10%;
+        width: 15%;
+        border-radius: 50%;
+        box-shadow: 0px 0px 7px 2px grey;
+    }
+
+    .ghost-button-rounded-corners {
+        display: inline-block;
+        width: 100px;
+        padding: 8px;
+        color: rgb(100, 100, 100);
+        border: 1px solid #fff;
+        border-radius: 5px;
+        text-align: center;
+        outline: none;
+        font-size: 110%;
+        text-decoration: none;
+        font-family: Inconsolata, serif;
+        background-color: rgba(256, 256, 256, 0.7);
+
+    }
+
+    .ghost-button-rounded-corners:hover,
+    .ghost-button-rounded-corners:active {
+        background-color: rgba(256, 256, 256, 0.9);
+        color: rgb(100, 100, 100);
+    }
+
+    .ghost-button-fully-rounded {
+        display: inline-block;
+        width: 9vw;
+        height: 9vw;
+        left: 70%;
+        color: rgb(100, 100, 100);
+        border: 1px solid #fff;
+        border-radius: 100%;
+        text-align: center;
+        outline: none;
+        font-size: 110%;
+        text-decoration: none;
+        font-family: Inconsolata, serif;
+        background-color: rgba(256, 256, 256, 0.7);
+        box-shadow: 0px 0px 7px 2px grey;
+    }
+
+    .ghost-button-fully-rounded:hover,
+    .ghost-button-fully-rounded:active {
+        background-color: rgba(256, 256, 256, 0.9);
+        color: rgb(100, 100, 100);
+    }
+
+    .composeImage {
+        position: relative;
+        left: 3%;
+        top: 7%;
+        width: 85%;
+        height: 65%;
+        alignment: center;
+    }
+
+    .ropeImageClass {
+        top: 47%;
+        max-height: 70%;
+        width: 100vw;
+        /*background-repeat: repeat-x;*/
+    }
+
+    .copyrightStyle {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-family: Tangerine, sans-serif;
+        font-size: 200%;
+        color: black;
+        background-color: transparent;
+        text-shadow: 0px 0px 9px 4px grey;
+        /*box-shadow: 0px 0px 7px 2px grey;*/
+    }
+
+    .my-signs {
+        margin-left: 5%;
+        width: 100%;
+        height: 100%;
+
+    }
+    .sign-container{
+        margin-left: 10%;
+        width: 20%;
+        height: 20%;
+    }
+    .sign-text{
+        position:absolute;
+        box-sizing: content-box;
+        top: 53%;
+        left: 20%;
+        /*right: 50%; !important;*/
+        /*bottom: 50%; !important;*/
+        z-index: 3;
+        width: 73%;
+        height: 1px;
+        font-family: 'Baloo', cursive;
+        font-size: larger;
+    }
+    .sign-auth-pic{
+        top: 33%;
+        left: 75%;
+        position: absolute;
+        z-index: 2;
+        height: 15%;
+        width: 15%;
+        border-radius: 50%;
+        box-shadow: 0px 0px 7px 2px grey;
+    }
+    .like-container{
+        position: absolute;
+        z-index: 2;
+        left: 17%;
+        top: 82%;
+    }
+    .sign-auth-name{
+        position: absolute;
+        white-space: nowrap;
+        top: 82%;
+        left: 60%;
+        color: gray;
+        font-family: sans-serif;
+
+    }
+    .my-tags{
+        position: absolute;
+        top: 45%;
+        left: -5%;
+        width: 25%;
+        height: 15%;
+        border-style: none;
+        /*box-shadow: 0px 0px 2px 2px grey;*/
+        z-index: 2;
+    }
+    .small-dot-tag {
+
+        top: 37%;
+        left: 40%;
+        position: absolute;
+        z-index: 2;
+        display: inline-block;
+        width: 1vw;
+        height: 1vw;
+        /*color: rgb(100, 100, 100);*/
+        /*padding-top: 100%;*/
+        border: 1px solid #fff;
+        border-radius: 50%;
+        text-align: center;
+        outline: none;
+        text-decoration: none;
+        font-family: Inconsolata, serif;
+        opacity: 0.7;
+        box-shadow: 0px 0px 1px 1px grey;
+    }
+
+    .small-dot-tag:hover,
+    .small-dot-tag:active {
+        opacity: 0.9;
+        /*background-color: rgba(256, 256, 256, 0.9);*/
+        /*color: rgb(100, 100, 100);*/
+    }
