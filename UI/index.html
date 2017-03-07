@@ -13,8 +13,9 @@
 <head>
     <meta charset="UTF-8">
     <title>FLIGHT</title>
+
 </head>
-<body>
+<body id="ropeAndSigns">
 <div class="container-fluid">
     <div style="margin-top: 9px; display:inline-block">
         <img src="loginPicture.png" class="userPicture">
@@ -26,46 +27,60 @@
         <button class="ghost-button-fully-rounded"><img src="composeButtonChanged.png" class="composeImage"
                                                         align="left"></button>
     </div>
-    <div class="col-xs-20" style="position: static">
+    <div class="col-xs-20" style="position: relative;top: 50%">
         <h1 class="text-center">Flight</h1>
     </div>
 </div>
-<div style="position: relative;">
-    <img src="rope2.png" class="ropeImageClass" style="z-index: 0;overflow: hidden">
-    <div style="position: absolute;top: 45%;display: block;overflow: hidden">
-        <div style="position:relative;float:left" class="sign-container">
-            <img src="Sign-better.png" class="my-signs" style="z-index: 1;overflow: hidden;">
-            <img src="loginPicture.png" class="sign-auth-pic">
-            <button class="small-dot-tag " style="background-color:red"></button>
-            <button class="small-dot-tag " style="background-color:yellow;left: 44%"></button>
-            <button class="small-dot-tag " style="background-color:green;left: 47%"></button>
-            <p class="sign-text"  >Was announced a brand new news app FLIGHT</p>
-            <p class="like-container"><i class="fa fa-heart" aria-hidden="true"></i> 1000</p>
-            <b class="sign-auth-name">by _aKrYm_</b>
-        </div>
-        <div style="position:relative;top: 45%;float: left" class="sign-container">
-            <img src="Sign-better.png" class="my-signs" style="z-index: 1;overflow: hidden;">
-            <button class="small-dot-tag " style="background-color:blue"></button>
-            <button class="small-dot-tag " style="background-color:black;left: 44%"></button>
-            <img src="loginPicture.png" class="sign-auth-pic">
-            <p class="sign-text" style="color: red;font-size: x-large" >Breaking news</p>
-            <p class="like-container"><i class="fa fa-heart-o" aria-hidden="true"></i> 993</p>
-            <b class="sign-auth-name">by _aKrYm_</b>
-        </div>
-        <div style="position:relative;top: 45%;float: left" class="sign-container">
-            <img src="Sign-better.png" class="my-signs" style="z-index: 1;overflow: hidden;">
-            <button class="small-dot-tag " style="background-color: rgb(230,253,56)"></button>
-            <button class="small-dot-tag " style="background-color:red;left: 44%"></button>
-            <button class="small-dot-tag " style="background-color:grey;left: 47%"></button>
-            <img src="loginPicture.png" class="sign-auth-pic">
-            <p class="sign-text"  >Apple announced iPhone 8</p>
-            <p class="like-container"><i class="fa fa-heart-o" aria-hidden="true"></i> 992</p>
-            <b class="sign-auth-name">by _aKrYm_</b>
-        </div>
+<span style="display: inline">
+    <img src="rope4.png" class="rope1ImageClass" id="pageRope0" >
+    <img src="rope4.png" class="rope2ImageClass" id="pageRope1">
+</span>>
 
+<div style="position: relative;" id="pageSigns">
+    <div  class="sign-container">
+        <img src="Sign-better.png" class="my-signs" style="z-index: 1;overflow: hidden;">
+        <img src="loginPicture.png" class="sign-auth-pic">
+        <button class="small-dot-tag " style="background-color:red"></button>
+        <button class="small-dot-tag " style="background-color:yellow;left: 44%"></button>
+        <button class="small-dot-tag " style="background-color:green;left: 47%"></button>
+        <p class="sign-text">Was announced a brand new news app FLIGHT</p>
+        <p class="like-container"><i class="fa fa-heart" aria-hidden="true"></i> 1000</p>
+        <b class="sign-auth-name">by _aKrYm_</b>
     </div>
+    <div class="sign-container">
+        <img src="Sign-better.png" class="my-signs" style="z-index: 1;overflow: hidden;">
+        <button class="small-dot-tag " style="background-color:blue"></button>
+        <button class="small-dot-tag " style="background-color:black;left: 44%"></button>
+        <img src="loginPicture.png" class="sign-auth-pic">
+        <p class="sign-text" style="color: red;font-size: x-large">Breaking news</p>
+        <p class="like-container"><i class="fa fa-heart-o" aria-hidden="true"></i> 993</p>
+        <b class="sign-auth-name">by _aKrYm_</b>
+    </div>
+    <div  class="sign-container">
+        <img src="Sign-better.png" class="my-signs" style="z-index: 1;overflow: hidden;">
+        <button class="small-dot-tag " style="background-color: rgb(230,253,56)"></button>
+        <button class="small-dot-tag " style="background-color:red;left: 44%"></button>
+        <button class="small-dot-tag " style="background-color:grey;left: 47%"></button>
+        <img src="loginPicture.png" class="sign-auth-pic">
+        <p class="sign-text">Apple announced iPhone 8</p>
+        <p class="like-container"><i class="fa fa-heart-o" aria-hidden="true"></i> 992</p>
+        <b class="sign-auth-name">by _aKrYm_</b>
+    </div>
+    <!--<div  class="sign-container">-->
+        <!--<img src="Sign-better.png" class="my-signs" style="z-index: 1;overflow: hidden;">-->
+        <!--<button class="small-dot-tag " style="background-color: rgb(230,253,56)"></button>-->
+        <!--<button class="small-dot-tag " style="background-color:red;left: 44%"></button>-->
+        <!--<button class="small-dot-tag " style="background-color:grey;left: 47%"></button>-->
+        <!--<img src="loginPicture.png" class="sign-auth-pic">-->
+        <!--<p class="sign-text">Apple announced iPhone 8</p>-->
+        <!--<p class="like-container"><i class="fa fa-heart-o" aria-hidden="true"></i> 992</p>-->
+        <!--<b class="sign-auth-name">by _aKrYm_</b>-->
+    <!--</div>-->
 </div>
 
+
+<script src="graphics.js"></script>
+<script src="script.js"></script>
 
 <div style="position: relative">
     <p class="copyrightStyle">

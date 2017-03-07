@@ -4,6 +4,10 @@
         background-attachment: fixed;
         background-repeat: no-repeat;
         background-size: cover;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
     }
 
     h1 {
@@ -74,12 +78,31 @@
         alignment: center;
     }
 
-    .ropeImageClass {
-        top: 47%;
+    .rope1ImageClass {
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        left:0px;
+        margin-left: 0%;
+        top: 45%;
         max-height: 70%;
+        margin-top: 1%;
         width: 100vw;
-        /*background-repeat: repeat-x;*/
     }
+    .rope2ImageClass{
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        float: left;
+        z-index: 0;
+        left:100%;
+        top: 45%;
+        max-height: 70%;
+        margin-top: 1%;
+        width: 100vw;
+    }
+
 
     .copyrightStyle {
         position: fixed;
@@ -101,7 +124,10 @@
 
     }
     .sign-container{
+        position: relative;
         margin-left: 10%;
+        top: 10%;
+        float: left;
         width: 20%;
         height: 20%;
     }
@@ -150,7 +176,6 @@
         width: 25%;
         height: 15%;
         border-style: none;
-        /*box-shadow: 0px 0px 2px 2px grey;*/
         z-index: 2;
     }
     .small-dot-tag {
@@ -162,8 +187,6 @@
         display: inline-block;
         width: 1vw;
         height: 1vw;
-        /*color: rgb(100, 100, 100);*/
-        /*padding-top: 100%;*/
         border: 1px solid #fff;
         border-radius: 50%;
         text-align: center;
@@ -173,10 +196,11 @@
         opacity: 0.7;
         box-shadow: 0px 0px 1px 1px grey;
     }
+    #pageSigns{
+        /*top: 5vh;*/
+    }
 
     .small-dot-tag:hover,
     .small-dot-tag:active {
         opacity: 0.9;
-        /*background-color: rgba(256, 256, 256, 0.9);*/
-        /*color: rgb(100, 100, 100);*/
     }
