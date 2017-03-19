@@ -1,6 +1,6 @@
 # MyRepository
 Temp repo for FPMI
 
-Don't forget checking website copy with the newest version:
+Don't forget to check parallel repository with the newes feautures added:
 
-https://akrum.github.io/akrum/ 
+https://github.com/akrum/Flight
