@@ -1,4 +1,6 @@
 # MyRepository
 Temp repo for FPMI
 
-Website copy: https://akrum.github.io/akrum/ 
+Don't forget checking website copy with the newest version:
+
+,https://akrum.github.io/akrum/ 
