@@ -13,14 +13,16 @@
 <head>
     <meta charset="UTF-8">
     <title>FLIGHT</title>
-
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 <div class="container-fluid">
     <div style="margin-top: 9px; display:inline-block">
-        <img src="loginPicture.png" class="user-picture blurred-object">
+        <img src="mainInterfaceObjects/unknownUser.png" class="user-picture blurred-object" id="authorPicture">
         <button class="ghost-button-rounded-corners blurred-object" id="loginButton">log in</button>
         <button class="ghost-button-rounded-corners blurred-object" id="registerButton">register</button>
+        <button class="ghost-button-rounded-corners blurred-object" id="logOutButton" style="display: none">log out
+        </button>
         <button class="fa fa-bars dropdown-tag-picker blurred-object"
                 aria-hidden="true" id="bars-picker"></button>
         <div class="arrow"></div>
@@ -40,39 +42,72 @@
                         <th align="center">Your filters</th>
                     </tr>
                     <tr>
-                        <td align="center">
-                            <button class="tag-pick-field">Technology</button>
-                            <button class="tag-pick-field" style="border: 2px solid #422caf;">Apple</button>
-                            <button class="tag-pick-field" style="border: 2px solid #af2f2b;">TESLA</button>
+                        <td align="center" id="availableTagsID">
                         </td>
-                        <td align="center">
-                            <button class="tag-pick-field">Technology</button>
-                            <button class="tag-pick-field" style="border: 2px solid #af2f2b;">TESLA</button>
+                        <td align="center" id="chosenTagsID">
                         </td>
                     </tr>
                 </table>
-                <button class="submit-button">Submit</button>
             </form>
         </div>
         <div class="login-form" id="loginFields">
-            <form>
+            <form name="loginForm">
                 <i class="fa fa-times close-button" aria-hidden="true" id="loginCloseButton"></i>
-                <input placeholder="Login" align="center" class="general-input-fields">
-                <input placeholder="Password" align="center" class="general-input-fields">
-                <button class="submit-button">Login</button>
+                <input placeholder="Login" align="center" class="general-input-fields" name="loginField">
+                <input placeholder="Password" align="center" class="general-input-fields" name="passwordField"
+                       type="password">
+                <button class="submit-button" id="loginSubmitButton">Login</button>
             </form>
         </div>
         <div class="register-form" id="registerFields">
             <i class="fa fa-times close-button" aria-hidden="true" id="registerCloseButton"></i>
-            <input placeholder="Login" align="center" class="general-input-fields">
-            <input placeholder="Password" align="center" class="general-input-fields">
-            <input placeholder="email" align="center" class="general-input-fields">
-            <button class="submit-button">Login</button>
+            <form name="registerForm">
+                <input placeholder="Login" align="center" class="general-input-fields">
+                <input placeholder="Password" align="center" class="general-input-fields" type="password">
+                <input placeholder="email" align="center" class="general-input-fields">
+                <button class="submit-button" id="registerSubmitButton">Login</button>
+            </form>
+            <div class="g-recaptcha re-captcha-style" data-sitekey="6Lcy8RgUAAAAABO53T_Td1KAtbVGMa7eWVrPNWpl"
+                 id="newRecaptcha"></div>
+        </div>
+        <div class="edit-popover-menu" id="editMenu">
+            <form name="editMenu">
+                <input placeholder="Article title" class="edit-summary-field" align="center" maxlength="99" name="articleTitle">
+                <table>
+                    <tr>
+                        <td style="border-left: none;">
+                            <div class="image-Upload-Div">
+                                <span>Upload image</span>
+                            </div>
+                        </td>
+                        <td style="border-left: none">
+                            <div contenteditable="true" class="edit-class"
+                                 data-placeholder="Start typing here...." id="editableDiv"></div>
+                        </td>
+                    </tr>
+                </table>
+                <button class="edit-button" style="color: red;" name="editMenuCancelButton">Cancel</button>
+                <button class="edit-button" name="editMenuPreviewButton">preview</button>
+                <button class="edit-button" name="editMenuDoneButton">Done</button>
+            </form>
+        </div>
+        <div class="detailed-popover-menu" id="detailedThing">
+            <form name="detailedForm">
+                <label class="detailed-title" id="detailed-title-label">TempTitle</label>
+                <button class="detailed-done-button" name="doneButton">Done</button>
+                <button class="detailed-remove-button" name="removeButton">Remove</button>
+                <img src="mainInterfaceObjects/example-detailed-picture.png" class="detailed-main-image">
+                <img src="mainInterfaceObjects/unknownUser.png" class="detailed-auth-pic">
+                <b class="detailed-auth-name" id="detailed-auth-name">by _aKrYm_</b>
+                <p class="detailed-like-container"><i class="fa fa-heart"></i>1000</p>
+                <div class="detailed-article-content" id="detailed-content"></div>
+            </form>
         </div>
     </div>
 </div>
 <div align="right">
-    <button class="ghost-button-fully-rounded blurred-object"><img src="composeButtonChanged.png" class="compose-image"
+    <button class="ghost-button-fully-rounded blurred-object" id="composeButton"><img src="mainInterfaceObjects/composeButtonChanged.png"
+                                                                   class="compose-image"
                                                                    align="left"></button>
 </div>
 <div class="col-xs-20 blurred-object site-name">
@@ -85,9 +120,13 @@
     </div>
 </div>
 
-
-<script src="script.js"></script>
-<script src="graphics.js" async></script>
+<script src="scripts/fillLocalStorageByDefault.js"></script>
+<script src="scripts/script.js"></script>
+<script src="scripts/graphics.js" async></script>
+<script src="scripts/tagPickerScript.js"></script>
+<script src="scripts/userAuthScript.js"></script>
+<script src="scripts/editMenuScript.js"></script>
+<script src="scripts/detailedInfoScript.js"></script>
 <div style="position: relative">
     <p class="copyright-style">
         Copyright © 2017 Andrew Rumiantsev.

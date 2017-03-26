@@ -1,2 +1,0 @@
-Pay attention!
-There could be some problems with <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> when loaded from local file system that is why you can go online to github pages copy: https://akrum.github.io/akrum/
