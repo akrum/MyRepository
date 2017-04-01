@@ -49,7 +49,13 @@ var userService=(function ()
             outputProblemToConsole("doesn't have user with password:"+user.password);
             return false;
         }
-        loggedAccounts.push(dbSuitableUser);
+        if(!loggedAccounts.find(function(acc)
+        {
+            return acc.nickname===user.nickname;
+        }))
+        {
+            loggedAccounts.push(dbSuitableUser);
+        }
         outputProblemToConsole("user with nickname "+user.nickname+" has logged in");
         return true;
     }
@@ -62,26 +68,59 @@ var userService=(function ()
         if(tempAcc)return true;
         else return false;
     }
+    function logOutUserWithNickname(userNickname)
+    {
+        var index=-1;
+        for(var i=0;i<loggedAccounts.length;i++){
+            if(loggedAccounts[i].nickname===userNickname)
+            {
+                index=i;
+                break;
+            }
+        }
+        if(index!=-1) 
+        {
+            loggedAccounts.splice(index,1);
+            outputProblemToConsole("user with nick:"+userNickname+" successfully logged out");
+            return true;
+        }
+        else 
+        {
+            outputProblemToConsole("couldn't log out user with Nickname:"+userNickname);
+            return false;
+        }
+        
+    }
     function userPictureURL(userNickname)
     {
         var tempAcc=loggedAccounts.find(function(someAcc)
         {
             if(someAcc.nickname===userNickname)return true;
         });
-        if(tempAcc.userPicture)return tempAcc.userPicture;
-        else return "mainInterfaceObjects/unknownUser.png";
+        if(!tempAcc)return undefined;
+        if(tempAcc.userPicture!==undefined)return tempAcc.userPicture;
     }
     return {
         init:init,
         doesHaveAUserWithPassword:doesHaveAUserWithPassword,
         isUserLoggedIn:isUserLoggedIn,
-        getUserPictureURL:userPictureURL
+        getUserPictureURL:userPictureURL,
+        logOutUserWithNickname:logOutUserWithNickname
     };
 }());
+function test()
+{
+    userService.doesHaveAUserWithPassword({nickname:"_aKrYm_",password:"tempPass"});
+    userService.logOutUserWithNickname("_aKrYm_");
+}
+
+
 module.exports = {
     init:userService.init,
     outputAllUsersToConsole:userService.outputAllUsersToConsole,
     doesHaveAUserWithPassword:userService.doesHaveAUserWithPassword,
     isUserLoggedIn:userService.isUserLoggedIn,
-    getUserPictureURL:userService.getUserPictureURL
+    getUserPictureURL:userService.getUserPictureURL,
+    logOutUserWithNickname:userService.logOutUserWithNickname,
+    test1:test
 }

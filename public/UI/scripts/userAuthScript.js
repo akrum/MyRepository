@@ -50,6 +50,8 @@ function logOutButtonPushed(evnt) {
     document.getElementById("registerButton").style.display="inline-block";
     document.getElementById("logOutButton").style.display="none";
     document.getElementById("authorPicture").setAttribute("src","mainInterfaceObjects/unknownUser.png");
+    oReq.open('GET', "/logOutUser?nickname="+userName);
+    oReq.send();
     userName="default";
     evnt.preventDefault();
 }

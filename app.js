@@ -1,7 +1,7 @@
 /**
  * Created by akrum on 27.03.17.
  */
-require(__dirname+'/dbFiller.js');
+require(__dirname+"/dbFiller.js");
 var express = require('express');
 var db = require('diskdb');
 var artService = require(__dirname+'/private/SERVER LOGIC/articleService.js');
@@ -50,6 +50,20 @@ app.get('/isLoggedIn',function(req,res)
     }
     else{
         res.json({logged: flightUserService.isUserLoggedIn(iNickname), forUser:iNickname});
+        res.status(200);
+    }
+});
+app.get('/logOutUser',function(req,res)
+{
+    let iNickname=req.query.nickname||req.body.nickname;
+    if(!iNickname)
+    {
+        res.status(400);
+        res.json({errordescription:"check request details",logged});
+        res.end();
+    }
+    else{
+        res.json({reqResult:flightUserService.logOutUserWithNickname(iNickname)});
         res.status(200);
     }
 });

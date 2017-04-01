@@ -260,10 +260,10 @@ var allTags = [
         color: rgb(255,255,255)
     }
 ];
-// db.mainBunchOfArticles.remove();
-// db.tagDatabase.remove();
-// db.nextIndexString.remove();
-// db.userFlightDB.remove();
+db.mainBunchOfArticles.remove();
+db.tagDatabase.remove();
+db.nextIndexString.remove();
+db.userFlightDB.remove();
 db.connect(__dirname+'/private/articleStorage', ['mainBunchOfArticles','nextIndexString','tagDatabase','userFlightDB']);
 articles.forEach(function(article)
 {
