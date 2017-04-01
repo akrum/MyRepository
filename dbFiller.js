@@ -1,5 +1,5 @@
 var db = require('diskdb');
-db.connect('./private/articleStorage', ['mainBunchOfArticles','nextIndexString','tagDatabase','userFlightDB']);
+db.connect(__dirname+'/private/articleStorage', ['mainBunchOfArticles','nextIndexString','tagDatabase','userFlightDB']);
 var flightUSERS=[
     {
         nickname:"_aKrYm_",
@@ -264,7 +264,7 @@ db.mainBunchOfArticles.remove();
 db.tagDatabase.remove();
 db.nextIndexString.remove();
 db.userFlightDB.remove();
-db.connect('./private/articleStorage', ['mainBunchOfArticles','nextIndexString','tagDatabase','userFlightDB']);
+db.connect(__dirname+'/private/articleStorage', ['mainBunchOfArticles','nextIndexString','tagDatabase','userFlightDB']);
 articles.forEach(function(article)
 {
     db.mainBunchOfArticles.save(article);
