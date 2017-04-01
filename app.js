@@ -1,6 +1,7 @@
 /**
  * Created by akrum on 27.03.17.
  */
+require(__dirname+'/dbFiller.js');
 var express = require('express');
 var db = require('diskdb');
 var artService = require(__dirname+'/private/SERVER LOGIC/articleService.js');
