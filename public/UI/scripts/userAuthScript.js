@@ -1,23 +1,45 @@
 /**
  * Created by akrum on 20.03.17.
  */
+var oReq = new XMLHttpRequest();
+function cleanOreq()
+{
+    oReq.removeEventListener('load', gotResponseForLoginRequest);
+}
+function gotResponseForLoginRequest()
+{
+    var form = document.forms.loginForm;
+    var response = JSON.parse(this.responseText);
+    if(response.checkSucceded)
+    {
+        document.getElementById("loginButton").style.display="none";
+        document.getElementById("registerButton").style.display="none";
+        document.getElementById("logOutButton").style.display="inline-block";
+        document.getElementById("authorPicture").setAttribute("src",response.picture);
+        userName=form.loginField.value;
+        form.loginField.value="";
+        form.passwordField.value="";
+        hideLoginFiields();
+    }
+    else
+    {
+        var errorString="Check user name or password";
+        if(response.errordescription)errorString+="server details:"+errordescription;
+        alert(errorString);
+    }
+    console.log(response);
+    cleanOreq();
+}
 function loginButtonPushed(evnt) {
     var form = document.forms.loginForm;
-    if(form.loginField.value==="demo")
-    {
-        if(form.passwordField.value==="demo")
-        {
-            document.getElementById("loginButton").style.display="none";
-            document.getElementById("registerButton").style.display="none";
-            document.getElementById("logOutButton").style.display="inline-block";
-            document.getElementById("authorPicture").setAttribute("src","loginPicture.png");
-            userName=form.loginField.value;
-            form.loginField.value="";
-            form.passwordField.value="";
-            hideLoginFiields();
-            evnt.preventDefault();
-        }
-    }
+    oReq.open('POST', "/accountLogin");
+    oReq.setRequestHeader('content-type', 'application/json');
+    const body = JSON.stringify({
+        nickname: form.loginField.value,
+        password: form.passwordField.value
+    });
+    oReq.send(body);
+    oReq.addEventListener('load', gotResponseForLoginRequest);
     evnt.preventDefault();
 }
 function registerButtonPushed(evnt) {

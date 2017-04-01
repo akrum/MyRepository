@@ -1,4 +1,9 @@
-*.iml
 .DS_Store
-.idea/
-out/
+.git
+.vscode
+/node_modules
+/task1
+mainBunchOfArticles.json
+nextIndexString.json
+tagDatabase.json
+userFlightDB.json

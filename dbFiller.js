@@ -1,7 +1,25 @@
-/**
- * Created by akrum on 17.03.17.
- */
-var FLIGHT_VERSION="0.1(Stable)";
+var db = require('diskdb');
+db.connect(__dirname+'/private/articleStorage', ['mainBunchOfArticles','nextIndexString','tagDatabase','userFlightDB']);
+var flightUSERS=[
+    {
+        nickname:"_aKrYm_",
+        email:"andy1116286@gmail.com",
+        password:"tempPass",
+        userPicture:"loginPicture.png"
+    },
+    {
+        nickname:"demo",
+        email:"demo@demo.org",
+        password:"demo",
+        userPicture:"mainInterfaceObjects/unknownUser.png"
+    },
+    {
+        nickname:"Akki",
+        email:"Andrey_Petuhov@tut.by",
+        password:"AkDEFAULTki",
+        userPicture:"https://pp.userapi.com/c637529/v637529253/46c3c/zIBhHFkzjBs.jpg"
+    }
+]
 var articles = [
     {
         id: '1',
@@ -242,29 +260,21 @@ var allTags = [
         color: rgb(255,255,255)
     }
 ];
-function Greetings()
+db.mainBunchOfArticles.remove();
+db.tagDatabase.remove();
+db.nextIndexString.remove();
+db.userFlightDB.remove();
+db.connect(__dirname+'/private/articleStorage', ['mainBunchOfArticles','nextIndexString','tagDatabase','userFlightDB']);
+articles.forEach(function(article)
 {
-    alert("Welcome to the Online newspaper FLIGHT("+FLIGHT_VERSION+"). You can start discovering by pushing '?' on the right bottom of the page");
-}
-var userFlightVersion=localStorage.getItem("Flight_newspaper_version");
-if(!userFlightVersion||userFlightVersion!==FLIGHT_VERSION)
+    db.mainBunchOfArticles.save(article);
+});
+db.nextIndexString.save({nextIndexLine:"21",key:"mainIndex"});
+allTags.forEach(function(tag)
 {
-    cleanFlightLocalStorage();
-    localStorage.setItem("Flight_newspaper_version",FLIGHT_VERSION);
-}
-// alert("WARNING!\nThe Site is being serviced now: execution can be unstable");
-if(localStorage.getItem("userArticles")===null||localStorage.getItem("defaultTags")===null)
+    db.tagDatabase.save(tag);
+});
+flightUSERS.forEach(function(user)
 {
-    console.log("Loading default articles to local storage");
-    localStorage.setItem("userArticles",JSON.stringify(articles));
-    localStorage.setItem("defaultNextIndex",JSON.stringify(21));
-    localStorage.setItem("defaultTags",JSON.stringify(allTags));
-    document.addEventListener('DOMContentLoaded', Greetings);
-}
-
-function cleanFlightLocalStorage (){
-    localStorage.removeItem("userArticles");
-    localStorage.removeItem("defaultNextIndex");
-    localStorage.removeItem("defaultTags");
-    console.log("Done clearing");
-}
+    db.userFlightDB.save(user);
+});
