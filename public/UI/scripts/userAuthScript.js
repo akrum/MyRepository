@@ -30,7 +30,6 @@ function gotResponseForLoginRequest()
         if(response.errordescription)errorString+="server details:"+errordescription;
         alert(errorString);
     }
-    console.log(response);
     cleanOreq();
 }
 function loginButtonPushed(evnt) {

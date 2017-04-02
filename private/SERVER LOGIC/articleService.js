@@ -19,6 +19,7 @@ var articleService=(function () {
       db.connect(databasePath, ['mainBunchOfArticles','nextIndexString','tagDatabase']);
       articles = db.mainBunchOfArticles.find();
       nextIndex=parseInt(db.nextIndexString.find()[0].nextIndexLine);
+      console.log("next index:",nextIndex);
       tags = db.tagDatabase.find();
       isInitiated=true;
     }
@@ -133,6 +134,10 @@ var articleService=(function () {
         sortArticles(articles);
         return articles;
     }
+    function getNextIndex()
+    {
+        return nextIndex;
+    }
     function getArticle(idNumber) {
         return articles.filter(function (article) {
             return article.id===idNumber;
@@ -195,6 +200,8 @@ var articleService=(function () {
             nextIndex++;
             updateNextIndexInDB()
             db.mainBunchOfArticles.save(article);
+            console.log("successfully added article: "+JSON.stringify(article));
+            return true;
         }
         else return false;
     }
@@ -261,9 +268,11 @@ var articleService=(function () {
         editArticle: editArticle,
         getAllArticles: getAllArticles,
         getTagArray: getTagArray,
-        compileDefaultArticle:compileDefaultArticle
+        compileDefaultArticle:compileDefaultArticle,
+        nextIndex:getNextIndex
     };
 }());
+
 function filterArticlesWithTags(someTags) {
     var compiledTags=[];
     someTags.forEach(function (oneTag) {
@@ -280,5 +289,6 @@ function test1()
 }
 module.exports = {
     articleService: articleService,
-    test1:test1
+    test1:test1,
+    nextArticleIndex:articleService.nextIndex
 }
