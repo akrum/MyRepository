@@ -3,6 +3,12 @@ var userService=(function ()
     var userDB;
     var flightUsersARRAY;
     var loggedAccounts=[];
+    var crypto = require('crypto');
+    var base64url = require('base64url');
+    /** Sync */
+    function randomStringAsBase64Url(size) {
+    return base64url(crypto.randomBytes(size)).substring(0,size);
+    }
     function init(databasePath)
     {
         userDB = require('diskdb');
@@ -28,12 +34,16 @@ var userService=(function ()
         if(!user.nickname)
         {
             outputProblemToConsole("couln't find a nickname in the input");
-            return false;
+            return {
+                verdict: false
+            };
         }
         if(!user.password)
         {
             outputProblemToConsole("couln't find a password in the input");
-            return false;
+            return {
+                verdict: false
+            };
         }
         var dbSuitableUser=flightUsersARRAY.find(function(tempUser)
         {
@@ -42,28 +52,41 @@ var userService=(function ()
         if(!dbSuitableUser)
         {
             outputProblemToConsole("doesn't have user with nickname:"+user.nickname);
-            return false;
+            return {
+                verdict: false
+            };
         }
         if(dbSuitableUser.password!==user.password)
         {
             outputProblemToConsole("doesn't have user with password:"+user.password);
-            return false;
+            return {
+                verdict: false
+            };
         }
-        if(!loggedAccounts.find(function(acc)
+        var loggedAccount=loggedAccounts.find(function(acc)
         {
             return acc.nickname===user.nickname;
-        }))
+        });
+        dbSuitableUser.sessionToken = randomStringAsBase64Url(20);
+        if(loggedAccount)
+        {
+            loggedAccount.sessionToken=dbSuitableUser.sessionToken;
+        }
+        else
         {
             loggedAccounts.push(dbSuitableUser);
         }
         outputProblemToConsole("user with nickname "+user.nickname+" has logged in");
-        return true;
+        return {
+            verdict:true,
+            sessionToken:dbSuitableUser.sessionToken
+        };
     }
-    function isUserLoggedIn(userNickname)
+    function isUserLoggedIn(userNickname,sessionToken)
     {
         var tempAcc=loggedAccounts.find(function(someAcc)
         {
-            if(someAcc.nickname===userNickname)return true;
+            if(someAcc.nickname===userNickname&&someAcc.sessionToken===sessionToken)return true;
         });
         if(tempAcc)return true;
         else return false;
@@ -86,7 +109,7 @@ var userService=(function ()
         }
         else 
         {
-            outputProblemToConsole("couldn't log out user with Nickname:"+userNickname);
+            outputProblemToConsole("couldn't log out user with nickname:"+userNickname);
             return false;
         }
         

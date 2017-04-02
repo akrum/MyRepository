@@ -7,6 +7,7 @@ const dateFilter=0b0100;
 const tagFilter=0b1000;
 var userLoggedIn = false;
 var userName = "default";
+var sessionToken = "default";
 var articleService=(function () {
     var articles;
     var isInitiated = false;

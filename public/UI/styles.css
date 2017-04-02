@@ -610,3 +610,7 @@
         top: 61%;
         font-size: 1vmax;
     }
+    #composeButton
+    {
+        visibility: hidden
+    }

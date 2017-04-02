@@ -35,21 +35,23 @@ app.post('/accountLogin',function(req,res){
         res.end();
     }
     else{
-        res.json({checkSucceded: flightUserService.doesHaveAUserWithPassword({nickname:iNickname,password:iPassword}), forUser:iNickname,picture:flightUserService.getUserPictureURL(iNickname)});
+        var checkResult = flightUserService.doesHaveAUserWithPassword({nickname:iNickname,password:iPassword});
+        res.json({checkSucceded: checkResult.verdict, forUser:iNickname,picture:flightUserService.getUserPictureURL(iNickname),thisSessionToken: checkResult.sessionToken});
         res.status(200);
     }
 })
 app.get('/isLoggedIn',function(req,res)
 {
     let iNickname = req.query.nickname||req.body.nickname;
-    if(!iNickname)
+    let querySessionToken = req.query.sessionToken||req.body.sessionToken;
+    if(!iNickname||!querySessionToken)
     {
         res.status(400);
-        res.json({errordescription:"check request details",logged});
+        res.json({errordescription:"check request details",logged:false});
         res.end();
     }
     else{
-        res.json({logged: flightUserService.isUserLoggedIn(iNickname), forUser:iNickname});
+        res.json({logged: flightUserService.isUserLoggedIn(iNickname,querySessionToken), forUser:iNickname});
         res.status(200);
     }
 });
@@ -67,6 +69,11 @@ app.get('/logOutUser',function(req,res)
         res.status(200);
     }
 });
+app.get('/getAllArticles',function(req,res)
+{
+    res.json(artService.articleService.getAllArticles());
+    res.status(200);
+})
 app.listen(portNumber, function () {
 console.log('Flight is listening on port:'+portNumber)
 });

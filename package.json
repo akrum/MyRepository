@@ -4,7 +4,9 @@
   "description": "online newspaper",
   "main": "app.js",
   "dependencies": {
+    "base64url": "^2.0.0",
     "body-parser": "^1.17.1",
+    "crypt": "0.0.2",
     "diskdb": "^0.1.17",
     "express": "^4.15.2",
     "path": "^0.12.7"

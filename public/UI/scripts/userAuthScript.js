@@ -16,6 +16,9 @@ function gotResponseForLoginRequest()
         document.getElementById("registerButton").style.display="none";
         document.getElementById("logOutButton").style.display="inline-block";
         document.getElementById("authorPicture").setAttribute("src",response.picture);
+        document.getElementById("composeButton").style.visibility="visible";
+        sessionToken = response.thisSessionToken;
+        console.log("got token: ",response.thisSessionToken);
         userName=form.loginField.value;
         form.loginField.value="";
         form.passwordField.value="";
@@ -50,9 +53,11 @@ function logOutButtonPushed(evnt) {
     document.getElementById("registerButton").style.display="inline-block";
     document.getElementById("logOutButton").style.display="none";
     document.getElementById("authorPicture").setAttribute("src","mainInterfaceObjects/unknownUser.png");
+    document.getElementById("composeButton").style.visibility="hidden";
     oReq.open('GET', "/logOutUser?nickname="+userName);
     oReq.send();
     userName="default";
+    sessionToken="default";
     evnt.preventDefault();
 }
 document.getElementById("loginSubmitButton").addEventListener("click", loginButtonPushed);
