@@ -9,6 +9,7 @@
     "crypt": "0.0.2",
     "diskdb": "^0.1.17",
     "express": "^4.15.2",
+    "firebase": "^3.7.5",
     "path": "^0.12.7"
   },
   "devDependencies": {},

@@ -1,7 +1,7 @@
 /**
  * Created by akrum on 27.03.17.
  */
-require(__dirname + "/dbFiller.js");
+var dbFiller=require(__dirname + "/dbFiller.js");
 var express = require('express');
 var db = require('diskdb');
 var artService = require(__dirname + '/private/SERVER LOGIC/articleService.js');
@@ -14,15 +14,24 @@ flightUserService.init(__dirname + '/private/articleStorage');
 
 var app = express();
 var portNumber = process.env.PORT || 3000;
-app.use(express.static('public/UI'));
+
 //we need it to parse content-type application/json
 app.use(bodyParser.json());
 
 //we need it to parse content-type application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.get('/', function (req, res) {
-    res.sendfile(__dirname + '/public/UI/index.html');
+    app.use(express.static('public/UI'));
+    res.sendFile(__dirname + '/public/UI/index.html');
+});
+app.get('updatedStyles.css',function(req,res)
+{
+   res.sendfile(__dirname+'/public/UpdatedUI/mainInterfaceObjects');
+});
+app.get('/reFlight',function(req,res)
+{
+    app.use(express.static('public/UpdatedUI'));
+    res.sendFile(__dirname+'/public/UpdatedUI/index.html');
 });
 app.post('/accountLogin', function (req, res) {
     let iNickname = req.query.nickname || req.body.nickname;
@@ -93,7 +102,39 @@ app.post('/addArticle', function (req, res) {
     }
 
 })
-
+app.delete('/deleteArticle',function(req,res)
+{
+    let iNickname = req.query.nickname || req.body.nickname;
+    let querySessionToken = req.query.sessionToken || req.body.sessionToken;
+    let idToDelete=req.query.articleID||req.body.articleID;
+    if (!iNickname || !querySessionToken || !idToDelete) 
+    {
+        res.status(400);
+        res.json({
+            verdict:false,
+            explanation:"You made a bad request"
+        });
+    }
+    else
+    {
+        if(flightUserService.isUserLoggedIn(iNickname,querySessionToken))
+        {
+            res.json({verdict: artService.articleService.removeArticle(idToDelete)});
+        }
+        else 
+        {
+            res.json({ verdict: false, explanation: "User is not logged in. Log in again" });
+            res.status(200);
+        }
+    }
+});
+app.get("/cleanDB",function(req,res)
+{
+    dbFiller.cleanDB();
+    artService.articleService.init(__dirname + '/private/articleStorage');
+    res.json({result:"OK"});
+    res.status(200);
+});
 app.listen(portNumber, function () {
-    console.log('Flight is listening on port:' + portNumber)
+    console.log('Flight is listening on port:' + portNumber);
 });

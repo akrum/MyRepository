@@ -19,7 +19,7 @@ var articleService=(function () {
       db.connect(databasePath, ['mainBunchOfArticles','nextIndexString','tagDatabase']);
       articles = db.mainBunchOfArticles.find();
       nextIndex=parseInt(db.nextIndexString.find()[0].nextIndexLine);
-      console.log("next index:",nextIndex);
+    //   console.log("next index:",nextIndex);
       tags = db.tagDatabase.find();
       isInitiated=true;
     }
@@ -200,13 +200,13 @@ var articleService=(function () {
             nextIndex++;
             updateNextIndexInDB()
             db.mainBunchOfArticles.save(article);
-            console.log("successfully added article: "+JSON.stringify(article));
+            // console.log("successfully added article: "+JSON.stringify(article));
             return true;
         }
         else return false;
     }
     function removeArticle(id) {
-        var index=0;
+        var index=-1;
         for(var i=0;i<articles.length;i++){
             if(articles[i].id===id)
             {
@@ -214,10 +214,16 @@ var articleService=(function () {
                 break;
             }
         }
-        articles.splice(index,1);
-        nextIndex--;
-        updateNextIndexInDB();
-        db.mainBunchOfArticles.remove({id:id},false);
+        if(index==-1)return false;
+        else
+        {
+            articles.splice(index,1);
+            console.log("successfully deleted article with id:",id);
+            updateNextIndexInDB();
+            db.mainBunchOfArticles.remove({id:id},false);
+            return true;
+        }
+        
     }
     function editArticle(articleID,someArticle) {
         var clone = Object.assign({}, getArticle(articleID));
