@@ -47,6 +47,7 @@ var articleService = (function () {
         artServiceReq.open('GET', "/getAllArticles");
         artServiceReq.send();
         artServiceReq.addEventListener('load', fillArticlesWithResponse);
+        // artServiceReq.onload=fillArticlesWithResponse;
         //   articles = JSON.parse(localStorage.getItem("userArticles"),function (key, value) {
         //       if(key==="createdAt")return new Date(value);
         //       return value;
@@ -358,9 +359,19 @@ var articleInsertTool = (function () {
         return result;
     }
     function makeHtmlForArticle(article) {
+        let userPicture="mainInterfaceObjects/unknownUser.png";
+        // oREQ.open('GET',"getUserPicture?nickname="+article.author,false);
+        // oREQ.send();
+        // function savePictureOnAnswer()
+        // {
+        //     let response=JSON.parse(this.responseText);
+        //     if(response.userPicture)userPicture=response.userPicture;
+        //     oREQ.removeEventListener('load',savePictureOnAnswer);
+        // }
+        // oREQ.addEventListener('load',savePictureOnAnswer);
         var result = "";
         result += buildOneTag("img", buildAttribute("src", "mainInterfaceObjects/Sign-better.png") + buildAttribute("class", "my-signs") + buildAttribute("data-id", article.id), undefined);
-        result += buildOneTag("img", buildAttribute("src", "loginPicture.png") + buildAttribute("class", "sign-auth-pic"), undefined);
+        result += buildOneTag("img", buildAttribute("src", userPicture) + buildAttribute("class", "sign-auth-pic"), undefined);
         var percentage = 40;
         article.tags.forEach(function (thisArtTag) {
             articleService.getTagArray().forEach(

@@ -1,8 +1,9 @@
 /**
  * Created by akrum on 27.03.17.
  */
-var dbFiller=require(__dirname + "/dbFiller.js");
+var dbFiller = require(__dirname + "/dbFiller.js");
 var express = require('express');
+var favicon = require('serve-favicon');
 var db = require('diskdb');
 var artService = require(__dirname + '/private/SERVER LOGIC/articleService.js');
 var flightUserService = require(__dirname + '/private/SERVER LOGIC/userAuthService.js');
@@ -13,6 +14,7 @@ artService.articleService.init(__dirname + '/private/articleStorage');
 flightUserService.init(__dirname + '/private/articleStorage');
 
 var app = express();
+app.use(favicon(__dirname + '/public/favicon.ico'));
 var portNumber = process.env.PORT || 3000;
 
 //we need it to parse content-type application/json
@@ -24,14 +26,12 @@ app.get('/', function (req, res) {
     app.use(express.static('public/UI'));
     res.sendFile(__dirname + '/public/UI/index.html');
 });
-app.get('updatedStyles.css',function(req,res)
-{
-   res.sendfile(__dirname+'/public/UpdatedUI/mainInterfaceObjects');
+app.get('updatedStyles.css', function (req, res) {
+    res.sendFile(__dirname + '/public/UpdatedUI/mainInterfaceObjects');
 });
-app.get('/reFlight',function(req,res)
-{
+app.get('/reFlight', function (req, res) {
     app.use(express.static('public/UpdatedUI'));
-    res.sendFile(__dirname+'/public/UpdatedUI/index.html');
+    res.sendFile(__dirname + '/public/UpdatedUI/index.html');
 });
 app.post('/accountLogin', function (req, res) {
     let iNickname = req.query.nickname || req.body.nickname;
@@ -76,9 +76,8 @@ app.get('/getAllArticles', function (req, res) {
     res.json(artService.articleService.getAllArticles());
     res.status(200);
 })
-app.get('/getNextIndex',function(req,res)
-{
-    res.json({index:artService.articleService.nextIndex()});
+app.get('/getNextIndex', function (req, res) {
+    res.json({ index: artService.articleService.nextIndex() });
     res.status(200);
 })
 app.post('/addArticle', function (req, res) {
@@ -102,39 +101,49 @@ app.post('/addArticle', function (req, res) {
     }
 
 })
-app.delete('/deleteArticle',function(req,res)
-{
+app.delete('/deleteArticle', function (req, res) {
     let iNickname = req.query.nickname || req.body.nickname;
     let querySessionToken = req.query.sessionToken || req.body.sessionToken;
-    let idToDelete=req.query.articleID||req.body.articleID;
-    if (!iNickname || !querySessionToken || !idToDelete) 
-    {
+    let idToDelete = req.query.articleID || req.body.articleID;
+    if (!iNickname || !querySessionToken || !idToDelete) {
         res.status(400);
         res.json({
-            verdict:false,
-            explanation:"You made a bad request"
+            verdict: false,
+            explanation: "You made a bad request"
         });
     }
-    else
-    {
-        if(flightUserService.isUserLoggedIn(iNickname,querySessionToken))
-        {
-            res.json({verdict: artService.articleService.removeArticle(idToDelete)});
+    else {
+        if (flightUserService.isUserLoggedIn(iNickname, querySessionToken)) {
+            res.json({ verdict: artService.articleService.removeArticle(idToDelete) });
         }
-        else 
-        {
+        else {
             res.json({ verdict: false, explanation: "User is not logged in. Log in again" });
             res.status(200);
         }
     }
 });
-app.get("/cleanDB",function(req,res)
-{
+app.get("/getUserPicture", function (req, res) {
+    const iNickname = req.query.nickname || req.body.nickname;
+    if (!iNickname) {
+        res.json({ explanation: "bad request" });
+        res.status(400);
+    }
+    else {
+        res.json({userPicture:flightUserService.getUserPictureURL(iNickname)});
+        res.status(200);
+    }
+});
+
+app.get("/cleanDB", function (req, res) {
     dbFiller.cleanDB();
     artService.articleService.init(__dirname + '/private/articleStorage');
-    res.json({result:"OK"});
+    res.json({ result: "OK" });
     res.status(200);
 });
+// app.get("/favicon",function(req,res)
+// {
+//     res.sendFile(__dirname + "/favicon.ico");
+// })
 app.listen(portNumber, function () {
     console.log('Flight is listening on port:' + portNumber);
 });

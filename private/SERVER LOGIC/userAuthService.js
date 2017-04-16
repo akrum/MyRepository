@@ -108,10 +108,13 @@ var userService = (function () {
 
     }
     function userPictureURL(userNickname) {
-        var tempAcc = loggedAccounts.find(function (someAcc) {
+        var tempAcc = flightUsersARRAY.find(function (someAcc) {
             if (someAcc.nickname === userNickname) return true;
         });
-        if (!tempAcc) return undefined;
+        if (!tempAcc) 
+        {
+            return "mainInterfaceObjects/unknownUser.png";
+        }
         if (tempAcc.userPicture !== undefined) return tempAcc.userPicture;
     }
     return {
