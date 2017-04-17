@@ -92,9 +92,16 @@
         position: absolute;
         margin-top: 4%;
     }
-    .all-signs{
+    .all-signs-first{
         position: absolute;
         margin-top: 3%;
+        /*top: 50%;*/
+        width: 100%;
+    }
+    .all-signs-second{
+        position: absolute;
+        margin-top: 3%;
+        left: 100%;
         /*top: 50%;*/
         width: 100%;
     }

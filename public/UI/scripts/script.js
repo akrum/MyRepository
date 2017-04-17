@@ -33,6 +33,7 @@ var articleService = (function () {
           if(key==="createdAt")return new Date(value);
           return value;
       });
+      console.log(articles);
         articles.forEach(function (article) {
             console.log(articleService.validateArticle(article));
         })

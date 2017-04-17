@@ -37,7 +37,7 @@ var articleService = (function () {
             console.log(articleService.validateArticle(article));
         })
         sortArticles(articles);
-        articleInsertTool.appendArticlesToContainer(articles);
+        // articleInsertTool.appendArticlesToContainer(articles);
         cleanArtServiceReq();
         artServiceReq.open('GET',"/getNextIndex");
         artServiceReq.send();
@@ -336,7 +336,7 @@ var articleService = (function () {
 var articleInsertTool = (function () {
     var articleContainer;
     function init() {
-        articleContainer = document.getElementById("articleContainer");
+        articleContainer = document.getElementById("articleContainerVisible");
     }
     function buildOneTag(tagName, attributes, innerText) {
         var result = "<";

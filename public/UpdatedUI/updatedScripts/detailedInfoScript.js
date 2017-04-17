@@ -42,6 +42,6 @@ function gotClickOnASign(evnt) {
     }
 }
 function initSignWrapper() {
-    document.getElementById("articleContainer").addEventListener("click",gotClickOnASign);
+    document.getElementById("articleContainerVisible").addEventListener("click",gotClickOnASign);
 }
 document.addEventListener('DOMContentLoaded', initSignWrapper);

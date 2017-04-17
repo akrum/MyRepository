@@ -33,7 +33,7 @@ var articleService=(function () {
     function updateDB(articleID)
     {
         db.mainBunchOfArticles.update({id:articleID},getArticle(articleID),{multi:false,upsert:false});
-        console.log("Database is updated");
+
     }
     function updateNextIndexInDB()
     {
@@ -198,8 +198,12 @@ var articleService=(function () {
         if (validateArticle(article)) {
             articles.push(article);
             nextIndex++;
-            updateNextIndexInDB()
-            db.mainBunchOfArticles.save(article);
+            updateNextIndexInDB();
+            let smallPromise = new Promise((resolve, reject)=>{
+                db.mainBunchOfArticles.save(article);
+                resolve();
+            }).then(()=>{console.log("successfully added article:"+article.id);})        
+            
             // console.log("successfully added article: "+JSON.stringify(article));
             return true;
         }
@@ -220,7 +224,11 @@ var articleService=(function () {
             articles.splice(index,1);
             console.log("successfully deleted article with id:",id);
             updateNextIndexInDB();
-            db.mainBunchOfArticles.remove({id:id},false);
+            new Promise((resolve,reject)=>
+            {
+                db.mainBunchOfArticles.remove({id:id},false);
+                resolve(id);
+            }).then((tempID)=>{console.log("removed article with id:"+tempID)});
             return true;
         }
         
@@ -239,7 +247,13 @@ var articleService=(function () {
                 if(articles[i].id===articleID)
                 {
                     articles[i]=clone;
-                    updateDB(articleID);
+                    let smallPromise = new Promise((resolve,reject)=>
+                    {
+                        updateDB(articleID);
+                        resolve();
+                    }
+                    ).then(()=>{console.log("Database is updated");})
+                    // updateDB(articleID);
                     return true;
                 }
             }
