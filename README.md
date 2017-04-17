@@ -1,9 +1,6 @@
 # MyRepository
 Temp repo for FPMI
 
-Don't forget to check parallel repository with the newest feautures added:
+You can check online site: https://flight-news.herokuapp.com
 
-https://github.com/akrum/Flight
-
-
-You can check also online site: https://flight-news.herokuapp.com
+Currently I'm working on redesigning, that is why all new features will be now available on https://flight-news.herokuapp.com/reFlight as well as on https://flight-news.herokuapp.com
