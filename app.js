@@ -155,15 +155,13 @@ app.get("/cleanDB", function (req, res) {
     res.status(200);
 });
 app.get('/auth/vkontakte',
-  passport.authenticate('vkontakte', { display: 'mobile' }),
+  passport.authenticate('vkontakte', { display: 'popup' }),
   function(req, res){
 });
 app.get('/auth/vkontakte/callback',
-//   passport.authenticate('vkontakte', { failureRedirect: '/login' }),
+  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
   function(req, res) {
-      console.log("got answer:"+JSON.stringify(req));
-    // Successful authentication, redirect home. 
-    res.redirect('/');
+    console.log(req.profile);
   });
 app.listen(portNumber, function () {
     console.log('Flight is listening on port:' + portNumber);
