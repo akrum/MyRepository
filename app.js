@@ -159,8 +159,9 @@ app.get('/auth/vkontakte',
   function(req, res){
 });
 app.get('/auth/vkontakte/callback',
-  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
+//   passport.authenticate('vkontakte', { failureRedirect: '/login' }),
   function(req, res) {
+      console.log("got answer:"+req);
     // Successful authentication, redirect home. 
     res.redirect('/');
   });
