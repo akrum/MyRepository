@@ -15,7 +15,7 @@ const VKontakteStrategy = require('passport-vkontakte').Strategy;
 passport.use(new VKontakteStrategy({
     clientID:     5999205, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId' 
     clientSecret: "DAjz4ZYV4VfYyB7SEnIZ",
-    callbackURL:  "http://localhost:3000/auth/vkontakte/callback"
+    callbackURL:  "https://flight-news.herokuapp.com/auth/vkontakte/callback"
   },
   function(accessToken, refreshToken, params, profile, done) {
     // console.log(params.email); // getting the email 
