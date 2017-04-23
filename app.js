@@ -5,10 +5,25 @@ var dbFiller = require(__dirname + "/dbFiller.js");
 var express = require('express');
 var favicon = require('serve-favicon');
 var db = require('diskdb');
+
 var artService = require(__dirname + '/private/SERVER LOGIC/articleService.js');
 var flightUserService = require(__dirname + '/private/SERVER LOGIC/userAuthService.js');
 var path = require('path');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+const VKontakteStrategy = require('passport-vkontakte').Strategy;
+passport.use(new VKontakteStrategy({
+    clientID:     5999205, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId' 
+    clientSecret: "DAjz4ZYV4VfYyB7SEnIZ",
+    callbackURL:  "http://localhost:3000/auth/vkontakte/callback"
+  },
+  function(accessToken, refreshToken, params, profile, done) {
+    // console.log(params.email); // getting the email 
+    User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
 
 artService.articleService.init(__dirname + '/private/articleStorage');
 flightUserService.init(__dirname + '/private/articleStorage');
@@ -19,7 +34,6 @@ var portNumber = process.env.PORT || 3000;
 
 //we need it to parse content-type application/json
 app.use(bodyParser.json());
-
 //we need it to parse content-type application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', function (req, res) {
@@ -140,10 +154,17 @@ app.get("/cleanDB", function (req, res) {
     res.json({ result: "OK" });
     res.status(200);
 });
-// app.get("/favicon",function(req,res)
-// {
-//     res.sendFile(__dirname + "/favicon.ico");
-// })
+app.get('/auth/vkontakte',
+  passport.authenticate('vkontakte', { display: 'mobile' }),
+  function(req, res){
+});
+app.get('/auth/vkontakte/callback',
+  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home. 
+    res.redirect('/');
+  });
 app.listen(portNumber, function () {
     console.log('Flight is listening on port:' + portNumber);
 });
+
