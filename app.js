@@ -162,6 +162,7 @@ app.get('/auth/vkontakte/callback',
   passport.authenticate('vkontakte', { failureRedirect: '/login' }),
   function(req, res) {
     console.log(req.profile);
+    res.redirect("/");
   });
 app.listen(portNumber, function () {
     console.log('Flight is listening on port:' + portNumber);
