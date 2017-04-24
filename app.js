@@ -15,8 +15,8 @@ const VKontakteStrategy = require('passport-vkontakte').Strategy;
 passport.use(new VKontakteStrategy({
     clientID:     5999205, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId' 
     clientSecret: "DAjz4ZYV4VfYyB7SEnIZ",
-    callbackURL:  "https://flight-news.herokuapp.com/auth/vkontakte/callback",
-    // callbackURL:  "https://localhost:3000/auth/vkontakte/callback",
+    // callbackURL:  "https://flight-news.herokuapp.com/auth/vkontakte/callback",
+    callbackURL:  "http://localhost:3000/auth/vk/callback",
     lang:"en"
   },
   function(accessToken, refreshToken, params, profile, done) {
@@ -182,14 +182,12 @@ app.get('/auth/vkontakte',
   passport.authenticate('vkontakte', { display: 'popup' }),
   function(req, res){
 });
-// app.get('/auth/vkontakte/callback',
-//   passport.authenticate('vkontakte', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // console.log(req.profile);
-    
-//     res.redirect("/");
-//   });
+app.get('/auth/vkontakte/callback',
+  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log(req);
+    res.redirect("/");
+  });
 app.listen(portNumber, function () {
     console.log('Flight is listening on port:' + portNumber);
 });
-
