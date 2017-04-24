@@ -59,7 +59,11 @@ app.post('/accountLogin', function (req, res) {
     }
     else {
         var checkResult = flightUserService.doesHaveAUserWithPassword({ nickname: iNickname, password: iPassword });
-        res.json({ checkSucceded: checkResult.verdict, forUser: iNickname, picture: flightUserService.getUserPictureURL(iNickname), thisSessionToken: checkResult.sessionToken });
+        res.json({ 
+            checkSucceded: checkResult.verdict, 
+            forUser: iNickname,
+            picture: flightUserService.getUserPictureURL(iNickname), 
+            thisSessionToken: checkResult.sessionToken });
         res.status(200);
     }
 })
@@ -68,11 +72,17 @@ app.get('/isLoggedIn', function (req, res) {
     let querySessionToken = req.query.sessionToken || req.body.sessionToken;
     if (!iNickname || !querySessionToken) {
         res.status(400);
-        res.json({ errordescription: "check request details", logged: false });
+        res.json({
+             errordescription: "check request details",
+              logged: false 
+            });
         res.end();
     }
     else {
-        res.json({ logged: flightUserService.isUserLoggedIn(iNickname, querySessionToken), forUser: iNickname });
+        res.json({
+             logged: flightUserService.isUserLoggedIn(iNickname, querySessionToken), 
+             forUser: iNickname
+             });
         res.status(200);
     }
 });
@@ -80,11 +90,15 @@ app.get('/logOutUser', function (req, res) {
     let iNickname = req.query.nickname || req.body.nickname;
     if (!iNickname) {
         res.status(400);
-        res.json({ errordescription: "check request details", logged });
+        res.json({
+             errordescription: "check request details", logged 
+            });
         res.end();
     }
     else {
-        res.json({ reqResult: flightUserService.logOutUserWithNickname(iNickname) });
+        res.json({ 
+            reqResult: flightUserService.logOutUserWithNickname(iNickname)
+         });
         res.status(200);
     }
 });
@@ -102,16 +116,24 @@ app.post('/addArticle', function (req, res) {
     let article = req.query.article || req.body.article;
     //should add a check
     if (!iNickname || !querySessionToken || !article) {
-        res.json = ({ verdict: false, explanation: "bad Request" });
+        res.json = ({ 
+            verdict: false, 
+            explanation: "bad Request" 
+        });
         res.status(400);
     }
     else {
         if (flightUserService.isUserLoggedIn(iNickname, querySessionToken)) {
-            res.json({ verdict: artService.articleService.addArticle(article) });
+            res.json({ 
+                verdict: artService.articleService.addArticle(article)
+             });
             res.status(200);
         }
         else {
-            res.json({ verdict: false, explanation: "User is not logged in. Log in again" });
+            res.json({ 
+                verdict: false,
+                 explanation: "User is not logged in. Log in again" 
+                });
             res.status(200);
         }
     }
@@ -133,7 +155,10 @@ app.delete('/deleteArticle', function (req, res) {
             res.json({ verdict: artService.articleService.removeArticle(idToDelete) });
         }
         else {
-            res.json({ verdict: false, explanation: "User is not logged in. Log in again" });
+            res.json({ 
+                verdict: false, 
+                explanation: "User is not logged in. Log in again" 
+            });
             res.status(200);
         }
     }
@@ -182,6 +207,7 @@ app.get('/auth/vkontakte',
 app.get('/auth/vkontakte/callback',
     passport.authenticate('vkontakte', { failureRedirect: '/accountLogin' }),
     function (req, res) {
+        console.log("req details:");
         console.log(req);
         res.redirect("/");
     });
