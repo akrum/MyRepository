@@ -207,8 +207,8 @@ app.get('/auth/vkontakte',
 app.get('/auth/vkontakte/callback',
     // passport.authenticate('vkontakte', { failureRedirect: '/accountLogin' }),
     function (req, res) {
-        console.log("req details:");
-        console.log(req);
+        console.log("got code:\n");
+        console.log(req.query.code);
         res.redirect("/");
     });
 app.listen(portNumber, function () {
