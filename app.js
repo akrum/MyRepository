@@ -15,7 +15,7 @@ const VKontakteStrategy = require('passport-vkontakte').Strategy;
 passport.use(new VKontakteStrategy({
     clientID: 5999205, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId' 
     clientSecret: "DAjz4ZYV4VfYyB7SEnIZ",
-    callbackURL:  "https://flight-news.herokuapp.com/auth/vkontakte/callback",
+    callbackURL: "https://flight-news.herokuapp.com/auth/vkontakte/callback",
     // callbackURL: "http://localhost:3000/auth/vk/callback",
     lang: "en"
 },
@@ -59,11 +59,12 @@ app.post('/accountLogin', function (req, res) {
     }
     else {
         var checkResult = flightUserService.doesHaveAUserWithPassword({ nickname: iNickname, password: iPassword });
-        res.json({ 
-            checkSucceded: checkResult.verdict, 
+        res.json({
+            checkSucceded: checkResult.verdict,
             forUser: iNickname,
-            picture: flightUserService.getUserPictureURL(iNickname), 
-            thisSessionToken: checkResult.sessionToken });
+            picture: flightUserService.getUserPictureURL(iNickname),
+            thisSessionToken: checkResult.sessionToken
+        });
         res.status(200);
     }
 })
@@ -73,16 +74,16 @@ app.get('/isLoggedIn', function (req, res) {
     if (!iNickname || !querySessionToken) {
         res.status(400);
         res.json({
-             errordescription: "check request details",
-              logged: false 
-            });
+            errordescription: "check request details",
+            logged: false
+        });
         res.end();
     }
     else {
         res.json({
-             logged: flightUserService.isUserLoggedIn(iNickname, querySessionToken), 
-             forUser: iNickname
-             });
+            logged: flightUserService.isUserLoggedIn(iNickname, querySessionToken),
+            forUser: iNickname
+        });
         res.status(200);
     }
 });
@@ -91,14 +92,14 @@ app.get('/logOutUser', function (req, res) {
     if (!iNickname) {
         res.status(400);
         res.json({
-             errordescription: "check request details", logged 
-            });
+            errordescription: "check request details", logged
+        });
         res.end();
     }
     else {
-        res.json({ 
+        res.json({
             reqResult: flightUserService.logOutUserWithNickname(iNickname)
-         });
+        });
         res.status(200);
     }
 });
@@ -116,24 +117,24 @@ app.post('/addArticle', function (req, res) {
     let article = req.query.article || req.body.article;
     //should add a check
     if (!iNickname || !querySessionToken || !article) {
-        res.json = ({ 
-            verdict: false, 
-            explanation: "bad Request" 
+        res.json = ({
+            verdict: false,
+            explanation: "bad Request"
         });
         res.status(400);
     }
     else {
         if (flightUserService.isUserLoggedIn(iNickname, querySessionToken)) {
-            res.json({ 
+            res.json({
                 verdict: artService.articleService.addArticle(article)
-             });
+            });
             res.status(200);
         }
         else {
-            res.json({ 
+            res.json({
                 verdict: false,
-                 explanation: "User is not logged in. Log in again" 
-                });
+                explanation: "User is not logged in. Log in again"
+            });
             res.status(200);
         }
     }
@@ -155,9 +156,9 @@ app.delete('/deleteArticle', function (req, res) {
             res.json({ verdict: artService.articleService.removeArticle(idToDelete) });
         }
         else {
-            res.json({ 
-                verdict: false, 
-                explanation: "User is not logged in. Log in again" 
+            res.json({
+                verdict: false,
+                explanation: "User is not logged in. Log in again"
             });
             res.status(200);
         }
@@ -205,12 +206,13 @@ app.get('/auth/vkontakte',
     function (req, res) {
     });
 app.get('/auth/vkontakte/callback',
-    // passport.authenticate('vkontakte', { failureRedirect: '/accountLogin' }),
+    passport.authenticate('vkontakte', { failureRedirect: '/accountLogin' }),
     function (req, res) {
         console.log("got code:\n");
         console.log(req.query.code);
         res.redirect("/");
-    });
+    }
+);
 app.listen(portNumber, function () {
     console.log('Flight is listening on port:' + portNumber);
 });
