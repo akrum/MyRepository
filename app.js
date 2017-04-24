@@ -13,21 +13,21 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 passport.use(new VKontakteStrategy({
-    clientID:     5999205, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId' 
+    clientID: 5999205, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId' 
     clientSecret: "DAjz4ZYV4VfYyB7SEnIZ",
-    // callbackURL:  "https://flight-news.herokuapp.com/auth/vkontakte/callback",
-    callbackURL:  "http://localhost:3000/auth/vk/callback",
-    lang:"en"
-  },
-  function(accessToken, refreshToken, params, profile, done) {
-    // console.log(params.email); // getting the email 
-    
-    console.log("Got profile info:\n");
-    console.log(profile);
-    // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
-    //   return done(err, user);
-    // });
-  }
+    callbackURL:  "https://flight-news.herokuapp.com/auth/vkontakte/callback",
+    // callbackURL: "http://localhost:3000/auth/vk/callback",
+    lang: "en"
+},
+    function (accessToken, refreshToken, params, profile, done) {
+        // console.log(params.email); // getting the email 
+
+        console.log("Got profile info:\n");
+        console.log(profile);
+        // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
+        //   return done(err, user);
+        // });
+    }
 ));
 
 artService.articleService.init(__dirname + '/private/articleStorage');
@@ -36,10 +36,7 @@ flightUserService.init(__dirname + '/private/articleStorage');
 var app = express();
 app.use(favicon(__dirname + '/public/favicon.ico'));
 var portNumber = process.env.PORT || 3000;
-
-//we need it to parse content-type application/json
 app.use(bodyParser.json());
-//we need it to parse content-type application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', function (req, res) {
     app.use(express.static('public/UI'));
@@ -148,7 +145,7 @@ app.get("/getUserPicture", function (req, res) {
         res.status(400);
     }
     else {
-        res.json({userPicture:flightUserService.getUserPictureURL(iNickname)});
+        res.json({ userPicture: flightUserService.getUserPictureURL(iNickname) });
         res.status(200);
     }
 });
@@ -179,15 +176,15 @@ app.get("/cleanDB", function (req, res) {
 //   }
 // ));
 app.get('/auth/vkontakte',
-  passport.authenticate('vkontakte', { display: 'popup' }),
-  function(req, res){
-});
+    passport.authenticate('vkontakte', { display: 'popup' }),
+    function (req, res) {
+    });
 app.get('/auth/vkontakte/callback',
-  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log(req);
-    res.redirect("/");
-  });
+    passport.authenticate('vkontakte', { failureRedirect: '/accountLogin' }),
+    function (req, res) {
+        console.log(req);
+        res.redirect("/");
+    });
 app.listen(portNumber, function () {
     console.log('Flight is listening on port:' + portNumber);
 });
