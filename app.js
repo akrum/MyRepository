@@ -21,7 +21,7 @@ passport.use(new VKontakteStrategy({
 },
     function (accessToken, refreshToken, profile, done) {
         console.log(profile);
-        return done(null,profile);
+        return done(null, profile);
     }
 ));
 
@@ -187,9 +187,20 @@ app.get('/auth/vkontakte/callback/',
     function (req, res) {
         console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
         console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body))
+
         // Successful authentication, redirect home.
         res.redirect('/');
-    });
+    }
+);
+
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (obj, done) {
+    done(null, obj);
+});
+
 app.get('/errorPage', function (req, res) {
     res.send("<strong>Got ERROR when authorising</strong>");
 });
