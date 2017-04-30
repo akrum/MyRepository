@@ -19,14 +19,14 @@ passport.use(new VKontakteStrategy({
     // callbackURL: "http://127.0.0.1:3000/auth/vk/callback",
     lang: "en"
 },
-    function (accessToken, refreshToken, params, profile, done) {
+    function verify(accessToken, refreshToken, params, profile, done) {
         // console.log(params.email); // getting the email 
 
         console.log("Got profile info:\n");
         console.log(profile);
         // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
         //   return done(err, user);
-        // });
+        // })
     }
 ));
 
@@ -182,16 +182,21 @@ app.get("/cleanDB", function (req, res) {
     res.json({ result: "OK" });
     res.status(200);
 });
-app.get('/auth/vkontakte',
-    passport.authenticate('vkontakte', { display: 'wap' }));
-app.get('/auth/vkontakte/callback',
+app.get('/auth/vkontakte', passport.authenticate('vkontakte', {
+    successRedirect: '/',
+    failureRedirect: '/errorPage'
+    //scope: ['email'] 
+}));
+
+app.get('/auth/vkontakte/callback/',
     passport.authenticate('vkontakte', {
-        successRedirect: '/',
-        failureRedirect: '/login'
-    })
-);
-app.get('/errorPage',function(req,res)
-{
+        failureRedirect: '/auth/vkontakte'
+        //scope: ['email'] 
+    }),
+    function (accessToken, refreshToken, profile, done) {
+        console.log(profile);
+    });
+app.get('/errorPage', function (req, res) {
     res.send("<strong>Got ERROR when authorising</strong>");
 });
 app.listen(portNumber, function () {
