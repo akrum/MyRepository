@@ -19,14 +19,8 @@ passport.use(new VKontakteStrategy({
     // callbackURL: "http://127.0.0.1:3000/auth/vk/callback",
     lang: "en"
 },
-    function verify(accessToken, refreshToken, params, profile, done) {
-        // console.log(params.email); // getting the email 
-
-        console.log("Got profile info:\n");
+    function (accessToken, refreshToken, profile, done) {
         console.log(profile);
-        // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
-        //   return done(err, user);
-        // })
     }
 ));
 
@@ -190,11 +184,14 @@ app.get('/auth/vkontakte', passport.authenticate('vkontakte', {
 
 app.get('/auth/vkontakte/callback/',
     passport.authenticate('vkontakte', {
-        failureRedirect: '/auth/vkontakte'
+        failureRedirect: 'auth/vkontakte'
         //scope: ['email'] 
     }),
-    function (accessToken, refreshToken, profile, done) {
-        console.log(profile);
+    function (req, res) {
+        console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
+        console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body))
+        // Successful authentication, redirect home.
+        res.redirect('/');
     });
 app.get('/errorPage', function (req, res) {
     res.send("<strong>Got ERROR when authorising</strong>");
