@@ -23,6 +23,11 @@ var portNumber = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// use passport session
+app.use(passport.initialize());
+app.use(require('express-session')({ secret: 'accessToken' }));
+app.use(passport.session());
+
 
 //=====vk stategy
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
@@ -64,12 +69,6 @@ passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
 //==end vk stategy
-// use passport session
-
-app.use(passport.initialize());
-app.use(require('express-session')({ secret: 'accessToken' }));
-app.use(passport.session());
-
 
 
 app.get('/', function (req, res) {
