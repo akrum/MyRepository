@@ -201,13 +201,13 @@ app.get('/auth/vkontakte/callback/',
     console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
       console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body))
           // Successful authentication, redirect home.
-
+          res.cookie("someString",req.query.code);
           res.redirect('/');
         });
 passport.serializeUser(function (user, done) {
     console.log("serialise user is fired and user is:");
     console.log(user);
-    done(null, user);
+    done(null, user.accessToken);
 });
 
 passport.deserializeUser(function (obj, done) {
