@@ -24,7 +24,7 @@ passport.use(new VKontakteStrategy({
         console.log("accessToken: "+accessToken);
         console.log("refresh token: "+refreshToken);
         console.log("done: "+done);
-        console.log(profile);
+        // console.log(profile);
         return done(null, profile);
     }
 ));
@@ -205,7 +205,8 @@ app.get('/auth/vkontakte/callback/',
           res.redirect('/');
         });
 passport.serializeUser(function (user, done) {
-    console.log("serialise user is fired");
+    console.log("serialise user is fired and user is:");
+    console.log(user);
     done(null, user);
 });
 
