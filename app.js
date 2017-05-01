@@ -12,22 +12,7 @@ var flightUserService = require(__dirname + '/private/SERVER LOGIC/userAuthServi
 var path = require('path');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-const VKontakteStrategy = require('passport-vkontakte').Strategy;
-passport.use(new VKontakteStrategy({
-    clientID: 5999205, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId' 
-    clientSecret: "DAjz4ZYV4VfYyB7SEnIZ",
-    callbackURL: "https://flight-news.herokuapp.com/auth/vkontakte/callback",
-    // callbackURL: "http://127.0.0.1:3000/auth/vk/callback",
-    lang: "en"
-},
-    function (accessToken, refreshToken, profile, done) {
-        console.log("accessToken: "+accessToken);
-        console.log("refresh token: "+refreshToken);
-        console.log("done: "+done);
-        // console.log(profile);
-        return done(null, profile);
-    }
-));
+
 
 artService.articleService.init(__dirname + '/private/articleStorage');
 flightUserService.init(__dirname + '/private/articleStorage');
@@ -37,10 +22,9 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 var portNumber = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// use passport session
-app.use(passport.initialize());
-app.use(require('express-session')({ secret: 'accessToken' }))
-app.use(passport.session());
+
+
+
 app.get('/', function (req, res) {
     app.use(express.static('public/UI'));
     console.log("got access token: "+ req.user);
@@ -194,6 +178,30 @@ app.get('/auth/vkontakte', passport.authenticate('vkontakte', {
     //scope: ['email'] 
 }));
 
+
+app.get('/errorPage', function (req, res) {
+    res.send("<strong>Got ERROR when authorising</strong>");
+});
+
+
+
+//=====vk stategy
+const VKontakteStrategy = require('passport-vkontakte').Strategy;
+passport.use(new VKontakteStrategy({
+    clientID: 5999205, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId' 
+    clientSecret: "DAjz4ZYV4VfYyB7SEnIZ",
+    callbackURL: "https://flight-news.herokuapp.com/auth/vkontakte/callback",
+    // callbackURL: "http://127.0.0.1:3000/auth/vk/callback",
+    lang: "en"
+},
+    function (accessToken, refreshToken, profile, done) {
+        console.log("accessToken: "+accessToken);
+        console.log("refresh token: "+refreshToken);
+        console.log("done: "+done);
+        // console.log(profile);
+        return done(null, profile);
+    }
+));
 app.get('/auth/vkontakte/callback/',
       passport.authenticate('vkontakte', { 
         failureRedirect: '/errorPages'
@@ -216,11 +224,11 @@ passport.deserializeUser(function (obj, done) {
     console.log("deserialise user is fired");
     done(null, obj);
 });
-
-app.get('/errorPage', function (req, res) {
-    res.send("<strong>Got ERROR when authorising</strong>");
-});
-
+//==end vk stategy
+// use passport session
+app.use(passport.initialize());
+app.use(require('express-session')({ secret: 'accessToken' }));
+app.use(passport.session());
 
 
 app.listen(portNumber, function () {
