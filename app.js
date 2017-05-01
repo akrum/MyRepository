@@ -42,6 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.get('/', function (req, res) {
     app.use(express.static('public/UI'));
+    if(req.user.accessToken)res.cookie("userAccessToken",req.user.accessToken);
     res.sendFile(__dirname + '/public/UI/index.html');
 });
 app.get('updatedStyles.css', function (req, res) {
@@ -201,13 +202,13 @@ app.get('/auth/vkontakte/callback/',
     console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
       console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body))
           // Successful authentication, redirect home.
-          res.cookie("someString",req.query.code);
+        //   res.cookie("someString",req.query.code);
           res.redirect('/');
         });
 passport.serializeUser(function (user, done) {
     console.log("serialise user is fired and user is:");
     console.log(user);
-    done(null, user.accessToken);
+    done(null, user);
 });
 
 passport.deserializeUser(function (obj, done) {
@@ -218,6 +219,9 @@ passport.deserializeUser(function (obj, done) {
 app.get('/errorPage', function (req, res) {
     res.send("<strong>Got ERROR when authorising</strong>");
 });
+
+
+
 app.listen(portNumber, function () {
     console.log('Flight is listening on port:' + portNumber);
 });
