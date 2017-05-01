@@ -185,20 +185,22 @@ app.get('/auth/vkontakte', passport.authenticate('vkontakte', {
 
   app.get('/auth/vkontakte/callback/',
       passport.authenticate('vkontakte', { 
-        failureRedirect: '/workspace/auth/vkontakte'
+        failureRedirect: '/errorPages'
         //scope: ['email'] 
       }),
         function(req, res) {
     console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
       console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body))
           // Successful authentication, redirect home.
-          res.redirect('workspace/');
+          res.redirect('/');
         });
 passport.serializeUser(function (user, done) {
+    console.log("serialise user is fired");
     done(null, user);
 });
 
 passport.deserializeUser(function (obj, done) {
+    console.log("deserialise user is fired");
     done(null, obj);
 });
 
