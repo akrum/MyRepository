@@ -42,7 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.get('/', function (req, res) {
     app.use(express.static('public/UI'));
-    console.log("got access token: "+ req.query.accessToken);
+    console.log("got access token: "+ req.user);
     res.sendFile(__dirname + '/public/UI/index.html');
 });
 app.get('updatedStyles.css', function (req, res) {
