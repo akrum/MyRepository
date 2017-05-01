@@ -33,6 +33,9 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 var portNumber = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// use passport session
+app.use(passport.initialize());
+app.use(passport.session());
 app.get('/', function (req, res) {
     app.use(express.static('public/UI'));
     res.sendFile(__dirname + '/public/UI/index.html');
