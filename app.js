@@ -21,6 +21,9 @@ passport.use(new VKontakteStrategy({
     lang: "en"
 },
     function (accessToken, refreshToken, profile, done) {
+        console.log("accessToken: "+accessToken);
+        console.log("refresh token: "+refreshToken);
+        console.log("done: "+done);
         console.log(profile);
         return done(null, profile);
     }
