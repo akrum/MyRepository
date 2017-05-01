@@ -42,7 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.get('/', function (req, res) {
     app.use(express.static('public/UI'));
-    if(req.query.user.accessToken)res.cookie("userAccessToken",req.user.accessToken);
+    if(req.query.user.accessToken!=undefined)res.cookie("userAccessToken",req.user.accessToken);
     res.sendFile(__dirname + '/public/UI/index.html');
 });
 app.get('updatedStyles.css', function (req, res) {
