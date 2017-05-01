@@ -39,6 +39,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // use passport session
 app.use(passport.initialize());
+app.use(require('express-session')({ secret: 'accessToken' }))
 app.use(passport.session());
 app.get('/', function (req, res) {
     app.use(express.static('public/UI'));
