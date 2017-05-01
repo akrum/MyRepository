@@ -59,12 +59,7 @@ app.get('/auth/vkontakte/callback/',
       passport.authenticate('vkontakte', { 
         failureRedirect: '/errorPages'
         //scope: ['email'] 
-      },
-      function(req,res)
-        {
-           console.log("callback is called"); 
-           console.log(req.user);
-        }),
+      }),
         function(req, res) {
     console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
       console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body))
