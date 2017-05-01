@@ -5,6 +5,7 @@ var dbFiller = require(__dirname + "/dbFiller.js");
 var express = require('express');
 var favicon = require('serve-favicon');
 var db = require('diskdb');
+var session = require('express-session')
 
 var artService = require(__dirname + '/private/SERVER LOGIC/articleService.js');
 var flightUserService = require(__dirname + '/private/SERVER LOGIC/userAuthService.js');
@@ -182,11 +183,13 @@ app.get("/cleanDB", function (req, res) {
 });
 app.get('/auth/vkontakte', passport.authenticate('vkontakte', {
     successRedirect: '/',
-    failureRedirect: '/errorPage'
+    failureRedirect: '/errorPage',
+    failureFlash:true,
+    successFlash:true
     //scope: ['email'] 
 }));
 
-  app.get('/auth/vkontakte/callback/',
+app.get('/auth/vkontakte/callback/',
       passport.authenticate('vkontakte', { 
         failureRedirect: '/errorPages'
         //scope: ['email'] 
@@ -195,6 +198,7 @@ app.get('/auth/vkontakte', passport.authenticate('vkontakte', {
     console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
       console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body))
           // Successful authentication, redirect home.
+
           res.redirect('/');
         });
 passport.serializeUser(function (user, done) {
