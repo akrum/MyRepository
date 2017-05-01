@@ -46,6 +46,14 @@ passport.use(new VKontakteStrategy({
         return done(null, profile);
     }
 ));
+app.get('/auth/vkontakte', passport.authenticate('vkontakte', {
+    successRedirect: '/',
+    failureRedirect: '/errorPage',
+    failureFlash:true,
+    successFlash:true
+    //scope: ['email'] 
+}));
+
 app.get('/auth/vkontakte/callback/',
       passport.authenticate('vkontakte', { 
         failureRedirect: '/errorPages'
@@ -216,13 +224,6 @@ app.get("/cleanDB", function (req, res) {
     res.json({ result: "OK" });
     res.status(200);
 });
-app.get('/auth/vkontakte', passport.authenticate('vkontakte', {
-    successRedirect: '/',
-    failureRedirect: '/errorPage',
-    failureFlash:true,
-    successFlash:true
-    //scope: ['email'] 
-}));
 
 
 app.get('/errorPage', function (req, res) {
