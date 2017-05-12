@@ -1,1 +1,1 @@
-JSONs are available in ../private/articleStorage
+JSONs are available at ../private/articleStorage
