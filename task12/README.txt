@@ -1,0 +1,1 @@
+JSONs are available in ../private/articleStorage
