@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // use passport session
 app.use(passport.initialize());
-app.use(require('express-session')({ secret: 'accessToken' }));
+// app.use(require('express-session')({ secret: 'accessToken' }));
 app.use(passport.session());
 
 
@@ -65,7 +65,7 @@ app.get('/auth/vkontakte/callback/',
       console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body))
           // Successful authentication, redirect home.
         //   res.cookie("someString",req.query.code);
-        //   res.redirect('/');
+          res.redirect('/');
         });
 passport.serializeUser(function (user, done) {
     console.log("serialise user is fired and user is:");

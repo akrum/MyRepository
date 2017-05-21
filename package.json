@@ -4,6 +4,7 @@
   "description": "online newspaper",
   "main": "app.js",
   "dependencies": {
+    "assert": "^1.4.1",
     "base64url": "^2.0.0",
     "body-parser": "^1.17.1",
     "crypt": "0.0.2",
@@ -11,6 +12,7 @@
     "express": "^4.15.2",
     "express-session": "^1.15.2",
     "firebase": "^3.7.5",
+    "mongodb": "^2.2.26",
     "passport": "^0.3.2",
     "passport-vkontakte": "^0.3.2",
     "path": "^0.12.7",
