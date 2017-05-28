@@ -20,6 +20,7 @@ function gotResponseForLoginRequest()
         sessionToken = response.thisSessionToken;
         console.log("got token: ",response.thisSessionToken);
         userName=form.loginField.value;
+        thisUserPicture=response.picture;
         form.loginField.value="";
         form.passwordField.value="";
         hideLoginFiields();

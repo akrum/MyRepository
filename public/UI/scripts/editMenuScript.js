@@ -56,6 +56,7 @@ function saveChangesButtonClicked(evnt) {
     tempArticle.author = userName;
     tempArticle.content = document.getElementById("editableDiv").innerText;
     tempArticle.tags = ["TECH", "DEMO"];
+    tempArticle.articleAuthorPicture=thisUserPicture;
     if (articleService.validateArticle(tempArticle)) {
         articleService.addArticle(tempArticle);
         tagService.updateArticles();

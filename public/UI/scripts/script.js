@@ -7,6 +7,7 @@ const dateFilter = 0b0100;
 const tagFilter = 0b1000;
 var userLoggedIn = false;
 var userName = "default";
+var thisUserPicture = undefined;
 var sessionToken = "default";
 var articleService = (function () {
     var articles;
@@ -361,6 +362,7 @@ var articleInsertTool = (function () {
     }
     function makeHtmlForArticle(article) {
         let userPicture="mainInterfaceObjects/unknownUser.png";
+        if(article.articleAuthorPicture)userPicture=article.articleAuthorPicture;
         // oREQ.open('GET',"getUserPicture?nickname="+article.author,false);
         // oREQ.send();
         // function savePictureOnAnswer()
